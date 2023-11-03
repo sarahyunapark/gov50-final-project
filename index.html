@@ -115,7 +115,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   <!--/radix_placeholder_rmarkdown_metadata-->
   
   <script type="text/json" id="radix-resource-manifest">
-  {"type":"character","attributes":{},"value":["index_files/anchor-4.2.2/anchor.min.js","index_files/bowser-1.9.3/bowser.min.js","index_files/distill-2.2.21/template.v2.js","index_files/header-attrs-2.17/header-attrs.js","index_files/header-attrs-2.24/header-attrs.js","index_files/jquery-3.6.0/jquery-3.6.0.js","index_files/jquery-3.6.0/jquery-3.6.0.min.js","index_files/jquery-3.6.0/jquery-3.6.0.min.map","index_files/popper-2.6.0/popper.min.js","index_files/tippy-6.2.7/tippy-bundle.umd.min.js","index_files/tippy-6.2.7/tippy-light-border.css","index_files/tippy-6.2.7/tippy.css","index_files/tippy-6.2.7/tippy.umd.min.js","index_files/webcomponents-2.0.0/webcomponents.js"]}
+  {"type":"character","attributes":{},"value":["index_files/anchor-4.2.2/anchor.min.js","index_files/bowser-1.9.3/bowser.min.js","index_files/distill-2.2.21/template.v2.js","index_files/figure-html5/unnamed-chunk-2-1.png","index_files/header-attrs-2.17/header-attrs.js","index_files/header-attrs-2.24/header-attrs.js","index_files/jquery-3.6.0/jquery-3.6.0.js","index_files/jquery-3.6.0/jquery-3.6.0.min.js","index_files/jquery-3.6.0/jquery-3.6.0.min.map","index_files/popper-2.6.0/popper.min.js","index_files/tippy-6.2.7/tippy-bundle.umd.min.js","index_files/tippy-6.2.7/tippy-light-border.css","index_files/tippy-6.2.7/tippy.css","index_files/tippy-6.2.7/tippy.umd.min.js","index_files/webcomponents-2.0.0/webcomponents.js"]}
   </script>
   <!--radix_placeholder_navigation_in_header-->
   <!--/radix_placeholder_navigation_in_header-->
@@ -1546,8 +1546,56 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <h2 id="project-thoughts">Project thoughts</h2>
 <p>I am interested in exploring data related to how the environmental index in different countries relates to the mortality rate in these different countries. I think this is interesting because environmental harm such as pollution can impact mortality rate as it can cause health issues.</p>
 <p>##Milestone 2
-I will use British Election study data on <a href="https://www.britishelectionstudy.com/data/" class="uri">https://www.britishelectionstudy.com/data/</a>. My research question is: does party impact an individual’s view on environmental protection? My hypothesis is that the more progressive a party is, the more likely they are to vote for environmental protection. My variables of interest are the types of parties in Britain (such as the Labour Party, Conservatives, Liberal Democrats, UKIP, Green Party, SNP, and Plaid Cymru) and their response to a survey on whether measures to protect the environment have not gone nearly far enough or have gone much too far. The variation is the different parties and their different numeric responses to the survey. An observed pattern in the data that would provide support for my hypothesis would be that specific parties that tend to support more progressive policies would be more passionate about the environment – and thus, respond with a lower number on whether they think measures to protect the environment have gone far enough. My sample is comprised of data from the years 2014, 2015, and 2017 from the British Election study data pertaining to environmental protection. My outcome variable is the response to the question.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+I will use data on billionaires from Kaggle: <a href="https://www.kaggle.com/datasets/nelgiriyewithana/billionaires-statistics-dataset/" class="uri">https://www.kaggle.com/datasets/nelgiriyewithana/billionaires-statistics-dataset/</a>. My research question will be: is there a correlation between self made status and final net worth? My variables of interest are whether an individual is self made or if they have inherited wealth, an their final net worth. My hypothesis is that self made billionaires are more likely to have higher net worths as they likely create something innovative while generational wealth may be lost over time. The variation is the difference in status of self made or not self made. An observed pattern in the data that would provide support for my hypothesis would be that self made billionaires would have a higher net worth as they create new companies and innovations while generational wealth may be diluted over time. My sample is comprised of data from Kaggle from 2023 which contains statistics on the world’s billionaires and other information. My outcome variable would be net worth.</p>
+##Milestone 3
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://readr.tidyverse.org'>readr</a></span><span class='op'>)</span></span>
+<span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://ggplot2.tidyverse.org'>ggplot2</a></span><span class='op'>)</span></span>
+<span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://tidyverse.tidyverse.org'>tidyverse</a></span><span class='op'>)</span></span>
+<span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://dplyr.tidyverse.org'>dplyr</a></span><span class='op'>)</span></span>
+<span><span class='va'>mydata</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://readr.tidyverse.org/reference/read_delim.html'>read_csv</a></span><span class='op'>(</span><span class='st'>"~/Desktop/Billionaires Statistics Dataset.csv"</span>, show_col_types <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></span>
+<span><span class='va'>mydata</span><span class='op'>$</span><span class='va'>selfMade</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/integer.html'>as.integer</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/logical.html'>as.logical</a></span><span class='op'>(</span><span class='va'>mydata</span><span class='op'>$</span><span class='va'>selfMade</span><span class='op'>)</span><span class='op'>)</span></span>
+<span><span class='va'>mydata</span></span></code></pre>
+</div>
+<pre><code># A tibble: 2,640 × 35
+    rank finalWorth category     personName   age country city  source
+   &lt;dbl&gt;      &lt;dbl&gt; &lt;chr&gt;        &lt;chr&gt;      &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt; 
+ 1     1     211000 Fashion &amp; R… Bernard A…    74 France  Paris LVMH  
+ 2     2     180000 Automotive   Elon Musk     51 United… Aust… Tesla…
+ 3     3     114000 Technology   Jeff Bezos    59 United… Medi… Amazon
+ 4     4     107000 Technology   Larry Ell…    78 United… Lanai Oracle
+ 5     5     106000 Finance &amp; I… Warren Bu…    92 United… Omaha Berks…
+ 6     6     104000 Technology   Bill Gates    67 United… Medi… Micro…
+ 7     7      94500 Media &amp; Ent… Michael B…    81 United… New … Bloom…
+ 8     8      93000 Telecom      Carlos Sl…    83 Mexico  Mexi… Telec…
+ 9     9      83400 Diversified  Mukesh Am…    65 India   Mumb… Diver…
+10    10      80700 Technology   Steve Bal…    67 United… Hunt… Micro…
+# ℹ 2,630 more rows
+# ℹ 27 more variables: industries &lt;chr&gt;, countryOfCitizenship &lt;chr&gt;,
+#   organization &lt;chr&gt;, selfMade &lt;int&gt;, status &lt;chr&gt;, gender &lt;chr&gt;,
+#   birthDate &lt;chr&gt;, lastName &lt;chr&gt;, firstName &lt;chr&gt;, title &lt;chr&gt;,
+#   date &lt;chr&gt;, state &lt;chr&gt;, residenceStateRegion &lt;chr&gt;,
+#   birthYear &lt;dbl&gt;, birthMonth &lt;dbl&gt;, birthDay &lt;dbl&gt;,
+#   cpi_country &lt;dbl&gt;, cpi_change_country &lt;dbl&gt;, gdp_country &lt;chr&gt;, …</code></pre>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>mydata</span> <span class='op'>&lt;-</span> <span class='va'>mydata</span> <span class='op'>|&gt;</span></span>
+<span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>self_made <span class='op'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/if_else.html'>if_else</a></span><span class='op'>(</span><span class='va'>selfMade</span> <span class='op'>==</span> <span class='fl'>1</span>, <span class='st'>"Self made"</span>, <span class='st'>"Not self made"</span><span class='op'>)</span><span class='op'>)</span> </span>
+<span></span>
+<span><span class='va'>my_data_scatter</span> <span class='op'>&lt;-</span> <span class='va'>mydata</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span>mapping <span class='op'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>self_made</span>, y <span class='op'>=</span> <span class='va'>finalWorth</span>, color <span class='op'>=</span> <span class='va'>self_made</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_point.html'>geom_point</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>labs</a></span><span class='op'>(</span></span>
+<span>    x <span class='op'>=</span> <span class='st'>"Self Made Status"</span>,</span>
+<span>    y <span class='op'>=</span> <span class='st'>"Net Worth (in 10000 USD)"</span>,</span>
+<span>    color <span class='op'>=</span> <span class='st'>"Self Made Status"</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='va'>my_data_scatter</span></span></code></pre>
+</div>
+<p><img src="index_files/figure-html5/unnamed-chunk-2-1.png" width="624" /></p>
+</div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
 </div>

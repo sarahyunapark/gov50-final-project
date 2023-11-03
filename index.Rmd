@@ -33,14 +33,14 @@ mydata
 mydata <- mydata |>
  mutate(self_made = if_else(selfMade == 1, "Self made", "Not self made")) 
 
-mydata_scatter <- mydata |>
+my_data_scatter <- mydata |>
   ggplot(mapping = aes(x = self_made, y = finalWorth, color = self_made)) + geom_point() +
   labs(
     x = "Self Made Status",
     y = "Net Worth (in 10000 USD)",
     color = "Self Made Status")
 
-mydata_scatter
+my_data_scatter
 ```
 
 
