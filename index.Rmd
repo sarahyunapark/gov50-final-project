@@ -14,4 +14,36 @@ output:
 I am interested in exploring data related to how the environmental index in different countries relates to the mortality rate in these different countries. I think this is interesting because environmental harm such as pollution can impact mortality rate as it can cause health issues.
 
 ##Milestone 2
-I will use British Election study data on https://www.britishelectionstudy.com/data/. My research question is: does party impact an individual's view on environmental protection? My hypothesis is that the more progressive a party is, the more likely they are to vote for environmental protection. My variables of interest are the types of parties in Britain (such as the Labour Party, Conservatives, Liberal Democrats, UKIP, Green Party, SNP, and Plaid Cymru) and their response to a survey on whether measures to protect the environment have not gone nearly far enough or have gone much too far. The variation is the different parties and their different numeric responses to the survey. An observed pattern in the data that would provide support for my hypothesis would be that specific parties that tend to support more progressive policies would be more passionate about the environment -- and thus, respond with a lower number on whether they think measures to protect the environment have gone far enough. My sample is comprised of data from the years 2014, 2015, and 2017 from the British Election study data pertaining to environmental protection. My outcome variable is the response to the question.
+I will use data on billionaires from Kaggle: https://www.kaggle.com/datasets/nelgiriyewithana/billionaires-statistics-dataset/. My research question will be: is there a correlation between self made status and final net worth? My variables of interest are whether an individual is self made or if they have inherited wealth, an their final net worth. My hypothesis is that self made billionaires are more likely to have higher net worths as they likely create something innovative while generational wealth may be lost over time. The variation is the difference in status of self made or not self made. An observed pattern in the data that would provide support for my hypothesis would be that self made billionaires would have a higher net worth as they create new companies and innovations while generational wealth may be diluted over time. My sample is comprised of data from Kaggle from 2023 which contains statistics on the world's billionaires and other information. My outcome variable would be net worth.
+
+
+##Milestone 3
+```{r}
+library(readr)
+library(ggplot2)
+library(tidyverse)
+library(dplyr)
+mydata <- read_csv("~/Desktop/Billionaires Statistics Dataset.csv", show_col_types = FALSE)
+mydata$selfMade <- as.integer(as.logical(mydata$selfMade))
+mydata
+```
+
+
+```{r}
+mydata <- mydata |>
+ mutate(self_made = if_else(selfMade == 1, "Self made", "Not self made")) 
+
+mydata_scatter <- mydata |>
+  ggplot(mapping = aes(x = self_made, y = finalWorth, color = self_made)) + geom_point() +
+  labs(
+    x = "Self Made Status",
+    y = "Net Worth (in 10000 USD)",
+    color = "Self Made Status")
+
+mydata_scatter
+```
+
+
+
+
+
