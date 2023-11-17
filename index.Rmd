@@ -42,8 +42,16 @@ my_data_scatter <- mydata |>
 
 my_data_scatter
 ```
+##Milestone #4
+```{r}
+mydata <- mydata |>
+ mutate(self_made = if_else(selfMade == 1, "Self made", "Not self made")) 
 
 
+worth_distribution <- mydata |>
+  group_by(self_made) |>
+  summarize(sm_mean = mean(finalWorth, na.rm = TRUE), sm_sd = sd(finalWorth, na.rm = TRUE))
 
-
-
+knitr::kable(worth_distribution, digits = 2, col.names = c("Self Made Status", "Final Net Worth Mean", "Final Net Worth Standard Deviation"))
+```
+In this analysis, using a table, the table illustrates the mean and standard deviation of the final net worth of self made and non self made individuals. The distribution table shows that on average, the average final net worth for non self made individuals is higher than the average final net worth for self made individuals. Furthermore, the final net worth standard deviation for non self made individuals is higher than the final net worth standard deviation for self made individuals. These results infer that on average, non self made individuals have a higher net worth.
