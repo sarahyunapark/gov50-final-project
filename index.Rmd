@@ -6,52 +6,58 @@ output:
   distill::distill_article:
     self_contained: false
 ---
+##Introduction
+My research question will be: is there a correlation between self made status and final net worth? My variables of interest are whether an individual is self made or if they have inherited wealth, and their final net worth. My hypothesis is that non self made billionaires (inherited wealth) are more likely to have higher net worths as they were passed down generational wealth, allowing their net worths to be accumulate more over time. The variation is the difference in status of self made or not self made/inherit wealth. For the purposes of this study, billionaires who inherited wealth will be called "not self made". An observed pattern in the data that would provide support for my hypothesis would be that non self-made billionaires would have a higher net worth as they have generational wealth that allowed their net worths to accrue over time. I expect that self-made billionaires, although very hard working and entrepreneurial, wouldn't have been able to accrue as large as a net worth compared to non self-made billionaires as they didn't have generational wealth passed down. My unit of analysis is a billionaire. The explanatory variable of interest is the status of the billionaires, whether they are self made or not self made. The variable is coded =1 for self-made and =0 for not self-made/inherited wealth. My outcome variable is the final net worth of the billionaire. For instance, if the variable were coded =211000, it would mean that the final net worth of that individual is 211000 hundred thousand or 211,000,000. This variable is measured from data from Kaggle from 2023 which contains statistics on the world's billionaires and other information such as category, name, age, location, gender, and more. If I observe a greater net worth in non self-made billionaires, this would support my hypothesis. If, on the other hand, I observe a greater net worth for self-made billionaires, this would provide evidence against my hypothesis. When I run my regression of the final net worth on the self-made status variable, a positive, significant coefficient would indicate support for my hypothesis.
 
 
-
-## Project thoughts
-
-I am interested in exploring data related to how the environmental index in different countries relates to the mortality rate in these different countries. I think this is interesting because environmental harm such as pollution can impact mortality rate as it can cause health issues.
-
-##Milestone 2
-I will use data on billionaires from Kaggle: https://www.kaggle.com/datasets/nelgiriyewithana/billionaires-statistics-dataset/. My research question will be: is there a correlation between self made status and final net worth? My variables of interest are whether an individual is self made or if they have inherited wealth, an their final net worth. My hypothesis is that self made billionaires are more likely to have higher net worths as they likely create something innovative while generational wealth may be lost over time. The variation is the difference in status of self made or not self made. An observed pattern in the data that would provide support for my hypothesis would be that self made billionaires would have a higher net worth as they create new companies and innovations while generational wealth may be diluted over time. My sample is comprised of data from Kaggle from 2023 which contains statistics on the world's billionaires and other information. My outcome variable would be net worth.
-
-
-##Milestone 3
 ```{r}
 library(readr)
 library(ggplot2)
 library(tidyverse)
 library(dplyr)
-mydata <- read_csv("~/Desktop/Billionaires Statistics Dataset.csv", show_col_types = FALSE)
-mydata$selfMade <- as.integer(as.logical(mydata$selfMade))
-mydata
+billionaires <- read_csv("~/Desktop/Billionaires Statistics Dataset.csv", show_col_types = FALSE)
+billionaires$selfMade <- as.integer(as.logical(billionaires$selfMade))
+billionaires
 ```
 
+##Data
+My data source is from Kaggle. The data was compiled from public sources on the Internet. The key dependent variable of final net worth was measured from real billionaire net worths that are publicly available. The key independent variable of net worth status was also compiled from public information from the Internet. For my data, I named the tibble billionaires, and loaded the data into that. In regards to the self-made status, the original data displayed self made status as TRUE or FALSE. I wanted to change it to binary to show either 1 for self-made or 0 for not self-made, so I could set conditions for `self_made` that is `Self made` if `selfMade` is 1 and `Not self made` otherwise. 
+
+My research design is cross-sectional as I am simply comparing net worths of self-made and non self-made billionares using already compiled data. 
 
 ```{r}
-mydata <- mydata |>
+billionaires <- billionaires |>
  mutate(self_made = if_else(selfMade == 1, "Self made", "Not self made")) 
 
-my_data_scatter <- mydata |>
+billionaires_scatter <- billionaires |>
   ggplot(mapping = aes(x = self_made, y = finalWorth, color = self_made)) + geom_point() +
   labs(
     x = "Self Made Status",
-    y = "Net Worth (in 10000 USD)",
+    y = "Net Worth (in 100,000 USD)",
     color = "Self Made Status")
 
-my_data_scatter
+billionaires_scatter
 ```
-##Milestone #4
+
+##Results
 ```{r}
-mydata <- mydata |>
+billionaires <- billionaires |>
  mutate(self_made = if_else(selfMade == 1, "Self made", "Not self made")) 
 
-
-worth_distribution <- mydata |>
+worth_distribution <- billionaires |>
   group_by(self_made) |>
   summarize(sm_mean = mean(finalWorth, na.rm = TRUE), sm_sd = sd(finalWorth, na.rm = TRUE))
 
 knitr::kable(worth_distribution, digits = 2, col.names = c("Self Made Status", "Final Net Worth Mean", "Final Net Worth Standard Deviation"))
+
+worth_distribution_plot <- billionaires |>
+  ggplot(data = billionaires, mapping = aes(x = self_made, y = finalWorth, color = self_made)) + geom_boxplot() +
+  labs(x = "Self Made Status", y = "Final Net Worth (in 100,000 USD)",
+        color = "Self Made Status")
+worth_distribution_plot
 ```
-In this analysis, using a table, the table illustrates the mean and standard deviation of the final net worth of self made and non self made individuals. The distribution table shows that on average, the average final net worth for non self made individuals is higher than the average final net worth for self made individuals. Furthermore, the final net worth standard deviation for non self made individuals is higher than the final net worth standard deviation for self made individuals. These results infer that on average, non self made individuals have a higher net worth.
+##Conclusion
+In this analysis, using a table, the table illustrates the mean and standard deviation of the final net worth of self made and non self made individuals. The distribution table shows that on average, the average final net worth for non self made individuals is higher than the average final net worth for self made individuals. Furthermore, the final net worth standard deviation for non self made individuals is higher than the final net worth standard deviation for self made individuals. These results infer that on average, non self made individuals have a higher net worth. There may be cother confounding variables, as well, such as those with inherited wealth were given loans to start businesses or hwere able to take further risks to pursue businesses or other entrepreneurial pursuits.
+
+There are limitations to the analysis as there is a confounding variable of generational wealth playing a factor as wealth can be passed down through generations, allowing non self made individuals to have a higher net worth. 
+*comment on the statistical signifiance of the estimated coefficient and whether i believe the coefficient to represent a causal effect*
